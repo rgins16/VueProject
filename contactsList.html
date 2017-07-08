@@ -1,0 +1,139 @@
+<!-- contacts list template -->
+<template id="contacts-list-template">
+  <div class="col-sm-6">
+    <div class="list-group">
+
+      <!-- this will show if the user does not currently have any contacts saved -->
+      <p v-if="contacts.length === 0">You have not saved any contacts yet</p>
+
+      <!-- this will show when the user has at least saved contact -->
+      <table v-if="contacts.length !== 0">
+        <!-- display labels at the top of the table -->
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Date Created</th>
+          <th>Actions</th>
+        </tr>
+        <!-- for each contact, add a table row with information about the contact -->
+        <tr v-for="contact in contacts">
+          <td>{{ contact.id }}</td>
+          <td>{{ contact.firstName }}</td>
+          <td>{{ contact.lastName }}</td>
+          <td>{{ contact.email }}</td>
+          <td>{{ contact.dateCreated }}</td>
+          <td>
+            <!-- view button which will open a modal to display information about the contact -->
+            <button v-on:click="viewContact=contact" type="button" class="btn btn-default" data-toggle="modal" data-target="
+            #viewContactModal">View</button>
+            <!-- update button which will open a modal to allow the user to update the contact -->
+            <button v-on:click="updateContactVar = Object.assign({}, contact)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateContactModal">Update</button>
+            <!-- delete button which will delete the contact from the contacts list -->
+            <button type="button" class="btn btn-danger" v-on:click="deleteContact(contact.id)">Delete</button>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <!-- add contact button which will open a new modal to allow the user to enter a new contact -->
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addContactModal">Add new Contact</button>
+    </div>
+
+    <!-- view contact modal -->
+    <div class="modal fade" id="viewContactModal" tabindex="-1" role="dialog" aria-labelledby="viewContactModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewContactModalLabel">View Contact</h5>
+          </div>
+          <div class="modal-body">
+            <!-- table which will show info about the contact -->
+            <table>
+              <!-- display labels at the top of the table -->
+              <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Date Created</th>
+              </tr>
+              <!-- display information about the contact -->
+              <tr>
+                <td>{{ viewContact.id }}</td>
+                <td>{{ viewContact.firstName }}</td>
+                <td>{{ viewContact.lastName }}</td>
+                <td>{{ viewContact.email }}</td>
+                <td>{{ viewContact.dateCreated }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <!-- close modal button -->
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- update contac modal -->
+    <div class="modal fade" id="updateContactModal" tabindex="-1" role="dialog" aria-labelledby="updateContactModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateContactModalLabel">Update Contact</h5>
+          </div>
+          <div class="modal-body">
+            <!-- first name inputs -->
+            <div class="form-group">
+              <input class="form-control" placeholder="First Name" v-model="updateContactVar.firstName">
+            </div>
+            <!-- last name input -->
+            <div class="form-group">
+              <input class="form-control" placeholder="Last Name" v-model="updateContactVar.lastName"></textarea>
+            </div>
+            <!-- email input -->
+            <div class="form-group">
+              <input class="form-control" placeholder="Email" v-model="updateContactVar.email"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- cancel and submit buttons -->
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button v-on:click="updateContact(updateContactVar.id)" type="button" class="btn btn-secondary">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- add contact modal -->
+    <div class="modal fade" id="addContactModal" tabindex="-1" role="dialog" aria-labelledby="addContactModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addContactModalLabel">Add Contact</h5>
+          </div>
+          <div class="modal-body">
+            <!-- first name input -->
+            <div class="form-group">
+              <input class="form-control" placeholder="First Name" v-model="firstName">
+            </div>
+            <!-- last name input -->
+            <div class="form-group">
+              <input class="form-control" placeholder="Last Name" v-model="lastName"></textarea>
+            </div>
+            <!-- email input -->
+            <div class="form-group">
+              <input class="form-control" placeholder="Email" v-model="email"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- cancel and submit buttons -->
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button v-on:click="addContact" type="button" class="btn btn-secondary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

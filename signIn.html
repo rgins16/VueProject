@@ -1,0 +1,38 @@
+<!-- sign in template -->
+<template id="sign-in-template">
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Sign In</h3>
+      </div>
+      <div class="panel-body">
+
+      <!-- sign in form -->
+        <form id="signInForm">
+          <!-- this will show errors -->
+          <div class="alert alert-danger" role="alert" v-if="alerts.length > 0" v-cloak>
+            <p v-for="alert in alerts">{{ alert }}</p>
+          </div> 
+
+          <!-- username input -->
+          <div class="form-group">
+            <input v-model="username" id="signInUsername" type="text" class="form-control" placeholder="Username" autofocus required>
+          </div>
+
+          <!-- password input -->
+          <div class="form-group">
+            <input v-model="password" id="signInPassword" type="password" class="form-control" placeholder="Password" required>
+          </div>
+
+          <!-- submit button which will be diabled and display the spinner after being clicked -->
+          <div class="form-group">
+            <button v-on:click="signIn" :disabled="loading" type="button" id="signInSubmit" name="signInSubmit" class="btn btn-success"><span v-if="!loading">Submit</span><span v-if="loading"><vue-simple-spinner speed=".2"></vue-simple-spinner></span></button>
+          </div>
+        </form>
+
+        <!-- register button will use vue-router to go the register template -->
+        <p>Don't have an account? <router-link to="/register">Sign Up Here</router-link></p>
+      </div>
+    </div>
+  </div>
+</template>

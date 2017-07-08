@@ -1,0 +1,58 @@
+<!-- register template -->
+<template id="register-template">
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Registration Page</h3>
+        <!-- sign in button that will use vue-router to go back to the sign in template -->
+        <router-link to="/signIn">Back To Sign In</router-link>
+      </div>
+      <div class="panel-body">
+
+        <!-- register form -->
+        <form id="register-form" @submit="registerUser">
+
+          <!-- this will show any errors -->
+          <div class="alert alert-danger" role="alert" v-if="alerts.length > 0" v-cloak>
+            <p v-for="alert in alerts">{{ alert }}</p>
+          </div> 
+
+          <!-- username input -->
+          <div class="form-group">
+            <input v-model="username" title="username must contain only letters and numbers, no spaces" type="text" class="form-control" placeholder="Username" pattern="[A-z0-9\S]{0,}" required>
+          </div>
+
+          <!-- email input -->
+          <div class="form-group">
+            <input v-model="email" type="email" class="form-control" placeholder="Email Address" required>
+          </div>
+
+          <!-- first name input -->
+          <div class="form-group">
+            <input v-model="firstName" type="text" class="form-control" placeholder="First Name" required>
+          </div>
+
+          <!-- last name input -->
+          <div class="form-group">
+            <input v-model="lastName" type="text" class="form-control" placeholder="Last Name" required>
+          </div>
+
+          <!-- password input -->
+          <div class="form-group">
+            <input v-model="password" title="password must be at least 8 characters" type="password" class="form-control" placeholder="Password" required pattern=".{8,}">
+          </div>
+
+          <!-- confirm password input -->
+          <div class="form-group">
+            <input v-model="confirmPassword" title="password must be at least 8 characters" type="password" class="form-control" placeholder="Confirm Password" required pattern=".{8,}">
+          </div>
+
+          <!-- submit button which will be disabled and display the spinner after being clicked -->
+          <div class="form-group">
+            <button :disabled="loading" type="submit" name="registerSubmit" id="registerSubmit" class="btn btn-success"><span v-if="!loading">Sign Up</span><span v-if="loading"><vue-simple-spinner speed=".2"></vue-simple-spinner></span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
